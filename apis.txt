@@ -1,0 +1,15 @@
+https://AZKTLDS5CP.kcloud.com:44300/sap/opu/odata/SAP/ZVP_ODATA_902095_SRV/LoginSet(Lifnr='0000000011',Password='1234')
+
+https://AZKTLDS5CP.kcloud.com:44300/sap/opu/odata/SAP/ZVP_ODATA_902095_SRV/VendorProfileSet(Lifnr='0000000011')
+
+https://AZKTLDS5CP.kcloud.com:44300/sap/opu/odata/SAP/ZVP_ODATA_902095_SRV/VendorRFQSet?$filter=Lifnr eq '100000'
+
+https://AZKTLDS5CP.kcloud.com:44300/sap/opu/odata/SAP/ZVP_ODATA_902095_SRV/VendorGRSet?$filter=Lifnr eq '100000'
+
+https://AZKTLDS5CP.kcloud.com:44300/sap/opu/odata/SAP/ZVP_ODATA_902095_SRV/VendorInvoiceSet?$filter=Lifnr eq '100000'
+
+https://AZKTLDS5CP.kcloud.com:44300/sap/opu/odata/SAP/ZVP_ODATA_902095_SRV/VendorPaymentSet?$filter=Lifnr eq '100000'
+
+https://AZKTLDS5CP.kcloud.com:44300/sap/opu/odata/SAP/ZVP_ODATA_902095_SRV/VendorAgingSet?$filter=Lifnr eq '100000'
+
+https://AZKTLDS5CP.kcloud.com:44300/sap/opu/odata/SAP/ZVP_ODATA_902095_SRV/InvoicePDFSet(BELNR='5100000012',LIFNR='11')/$value
