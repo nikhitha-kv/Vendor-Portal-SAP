@@ -63,7 +63,8 @@ import { SkeletonLoaderComponent } from '../../../shared/components/skeleton-loa
       <app-skeleton-loader *ngIf="isLoading" type="table"></app-skeleton-loader>
 
       <div *ngIf="!isLoading" class="glass-panel overflow-hidden">
-        <div class="overflow-x-auto">
+        <!-- Desktop Table view -->
+        <div class="hidden md:block overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
               <tr class="border-b border-blue-500/10 bg-slate-900/30">
@@ -71,6 +72,11 @@ import { SkeletonLoaderComponent } from '../../../shared/components/skeleton-loa
                 <th class="py-3.5 px-6 text-[10.5px] font-bold text-slate-500 uppercase tracking-widest">Date</th>
                 <th class="py-3.5 px-6 text-[10.5px] font-bold text-slate-500 uppercase tracking-widest">Currency</th>
                 <th class="py-3.5 px-6 text-[10.5px] font-bold text-slate-500 uppercase tracking-widest text-right">Amount</th>
+                <th class="py-3.5 px-6 text-[10.5px] font-bold text-slate-500 uppercase tracking-widest">Item Number</th>
+                <th class="py-3.5 px-6 text-[10.5px] font-bold text-slate-500 uppercase tracking-widest">Material</th>
+                <th class="py-3.5 px-6 text-[10.5px] font-bold text-slate-500 uppercase tracking-widest">Item Description</th>
+                <th class="py-3.5 px-6 text-[10.5px] font-bold text-slate-500 uppercase tracking-widest">Quantity</th>
+                <th class="py-3.5 px-6 text-[10.5px] font-bold text-slate-500 uppercase tracking-widest">Unit</th>
               </tr>
             </thead>
             <tbody>
@@ -79,9 +85,14 @@ import { SkeletonLoaderComponent } from '../../../shared/components/skeleton-loa
                 <td class="py-3.5 px-6 text-sm text-slate-400">{{ po.Bedat | date:'dd MMM yyyy' }}</td>
                 <td class="py-3.5 px-6"><span class="badge-amber">{{ po.Waers }}</span></td>
                 <td class="py-3.5 px-6 text-sm font-mono text-white text-right">{{ po.Netwr | number:'1.2-2' }}</td>
+                <td class="py-3.5 px-6 text-sm text-slate-400 font-mono">{{ po.Ebelp || po.EBELP || '-' }}</td>
+                <td class="py-3.5 px-6 text-sm text-slate-400 font-mono">{{ po.Matnr || po.MATNR || '-' }}</td>
+                <td class="py-3.5 px-6 text-sm text-slate-300 italic">{{ po.Txz01 || po.TXZ01 || '-' }}</td>
+                <td class="py-3.5 px-6 text-sm text-slate-300 font-semibold">{{ po.Menge || po.MENGE || '-' }}</td>
+                <td class="py-3.5 px-6 text-sm text-slate-400">{{ po.Meins || po.MEINS || '' }}</td>
               </tr>
               <tr *ngIf="filtered.length === 0">
-                <td colspan="4" class="py-14 text-center">
+                <td colspan="9" class="py-14 text-center">
                   <span class="material-icons text-4xl text-slate-700 block mb-2">search_off</span>
                   <p class="text-slate-500 text-sm">No POs match your filter</p>
                   <button (click)="clearFilters()" class="mt-3 text-xs text-blue-400 hover:underline">Clear filters</button>
@@ -92,10 +103,63 @@ import { SkeletonLoaderComponent } from '../../../shared/components/skeleton-loa
               <tr class="border-t-2 border-slate-700 bg-slate-900/50">
                 <td colspan="3" class="py-3.5 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider text-right">Grand Total</td>
                 <td class="py-3.5 px-6 text-base font-bold text-emerald-400 font-mono text-right">{{ filteredTotal | number:'1.2-2' }}</td>
+                <td colspan="5"></td>
               </tr>
             </tfoot>
           </table>
         </div>
+
+        <!-- Mobile Card Layout -->
+        <div class="block md:hidden overflow-y-auto max-h-[500px]">
+          <div class="p-4 space-y-4">
+            <div *ngFor="let po of filtered" class="glass-panel p-4 space-y-3 border border-emerald-500/10 hover:border-emerald-500/30 transition-colors">
+              <div class="flex justify-between items-center border-b border-blue-500/10 pb-2">
+                <span class="font-mono font-bold text-emerald-400 text-sm">{{ po.Ebeln }}</span>
+                <span class="badge-amber">{{ po.Waers }}</span>
+              </div>
+              
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <p class="text-slate-500">Date</p>
+                  <p class="text-slate-300 font-medium">{{ po.Bedat | date:'dd MMM yyyy' }}</p>
+                </div>
+                <div>
+                  <p class="text-slate-500">Amount</p>
+                  <p class="text-slate-300 font-mono font-bold">{{ po.Netwr | number:'1.2-2' }}</p>
+                </div>
+                <div>
+                  <p class="text-slate-500">Item Number</p>
+                  <p class="text-slate-300 font-mono">{{ po.Ebelp || po.EBELP || '-' }}</p>
+                </div>
+                <div>
+                  <p class="text-slate-500">Material</p>
+                  <p class="text-slate-300 font-mono">{{ po.Matnr || po.MATNR || '-' }}</p>
+                </div>
+                <div>
+                  <p class="text-slate-500">Quantity</p>
+                  <p class="text-slate-300 font-semibold">{{ po.Menge || po.MENGE || '-' }} {{ po.Meins || po.MEINS || '' }}</p>
+                </div>
+              </div>
+              
+              <div class="text-xs pt-2 border-t border-blue-500/5">
+                <p class="text-slate-500">Description</p>
+                <p class="text-slate-300 italic">{{ po.Txz01 || po.TXZ01 || '-' }}</p>
+              </div>
+            </div>
+            
+            <div *ngIf="filtered.length > 0" class="glass-panel p-4 bg-slate-900/50 border border-slate-700/50 flex justify-between items-center">
+              <span class="text-xs font-bold text-slate-400 uppercase">Grand Total</span>
+              <span class="text-base font-bold text-emerald-400 font-mono">{{ filteredTotal | number:'1.2-2' }}</span>
+            </div>
+
+            <div *ngIf="filtered.length === 0" class="py-14 text-center">
+              <span class="material-icons text-4xl text-slate-700 block mb-2">search_off</span>
+              <p class="text-slate-500 text-sm">No POs match your filter</p>
+              <button (click)="clearFilters()" class="mt-3 text-xs text-blue-400 hover:underline">Clear filters</button>
+            </div>
+          </div>
+        </div>
+
         <div class="px-6 py-3 border-t border-blue-500/8 bg-slate-900/30 text-xs text-slate-600 flex justify-between">
           <span>{{ filtered.length }} record(s)</span>
           <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Live SAP OData</span>
@@ -121,9 +185,9 @@ export class PoComponent implements OnInit {
       next: (data) => { this.pos = data; this.buildMeta(); this.applyFilter(); this.isLoading = false; },
       error: () => {
         this.pos = [
-          { Lifnr: '11', Ebeln: '4500000010', Bedat: '2023-11-01', Netwr: 5000.50, Waers: 'INR' },
-          { Lifnr: '11', Ebeln: '4500000011', Bedat: '2023-11-05', Netwr: 12500.00, Waers: 'INR' },
-          { Lifnr: '11', Ebeln: '4500000012', Bedat: '2023-11-10', Netwr: 3200.00, Waers: 'USD' },
+          { Lifnr: '11', Ebeln: '4500000010', Bedat: '2023-11-01', Netwr: 5000.50, Waers: 'INR', Ebelp: '00010', Matnr: 'MAT-101', Txz01: 'Steel Pipes 10 inch', Menge: 100, Meins: 'PC' },
+          { Lifnr: '11', Ebeln: '4500000011', Bedat: '2023-11-05', Netwr: 12500.00, Waers: 'INR', Ebelp: '00020', Matnr: 'MAT-202', Txz01: 'Copper Wires 50m', Menge: 50, Meins: 'ROL' },
+          { Lifnr: '11', Ebeln: '4500000012', Bedat: '2023-11-10', Netwr: 3200.00, Waers: 'USD', Ebelp: '00010', Matnr: 'MAT-303', Txz01: 'Valve Fittings 2cm', Menge: 250, Meins: 'PC' },
         ];
         this.buildMeta(); this.applyFilter(); this.isLoading = false;
       }

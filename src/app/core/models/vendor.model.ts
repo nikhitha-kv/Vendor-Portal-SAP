@@ -24,6 +24,16 @@ export interface VendorRFQ {
   Bsart: string; // Type
   Bedat: string; // Date
   // Add other fields as necessary from OData response
+  Ebelp?: string; // Item Number (EBELP)
+  Matnr?: string; // Material (MATNR)
+  Txz01?: string; // Item Description (TXZ01)
+  Menge?: string | number; // Quantity (MENGE)
+  Meins?: string; // Unit (MEINS)
+  EBELP?: string; // UPPERCASE support
+  MATNR?: string; // UPPERCASE support
+  TXZ01?: string; // UPPERCASE support
+  MENGE?: string | number; // UPPERCASE support
+  MEINS?: string; // UPPERCASE support
 }
 
 // PO model (VendorPOSet)
@@ -33,6 +43,16 @@ export interface VendorPO {
   Bedat: string; // Date
   Netwr: number; // Amount
   Waers: string; // Currency
+  Ebelp?: string; // Item Number (EBELP)
+  Matnr?: string; // Material (MATNR)
+  Txz01?: string; // Item Description (TXZ01)
+  Menge?: string | number; // Quantity (MENGE)
+  Meins?: string; // Unit (MEINS)
+  EBELP?: string; // UPPERCASE support
+  MATNR?: string; // UPPERCASE support
+  TXZ01?: string; // UPPERCASE support
+  MENGE?: string | number; // UPPERCASE support
+  MEINS?: string; // UPPERCASE support
 }
 
 // GR model (VendorGRSet)
@@ -42,6 +62,14 @@ export interface VendorGR {
   Mjahr: string; // Year
   Ebeln: string; // PO Number
   Budat: string; // Posting Date
+  Matnr?: string; // Material (MATNR)
+  Txz01?: string; // Item Description (TXZ01)
+  Menge?: string | number; // Quantity (MENGE)
+  Meins?: string; // Unit (MEINS)
+  MATNR?: string; // UPPERCASE support
+  TXZ01?: string; // UPPERCASE support
+  MENGE?: string | number; // UPPERCASE support
+  MEINS?: string; // UPPERCASE support
 }
 
 // Invoice model (VendorInvoiceSet)
